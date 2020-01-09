@@ -72,6 +72,11 @@ def search():
     category = request.args.get('category', '')
     sort_by = request.args.get('sort_by', '')
 
+    return searchQuery(query, limit, offset, category, sort_by)
+
+
+def searchQuery(query, limit, offset, category, sort_by):
+
     category_filters = {
         "gene": ['gene_type', 'gene_biological_process', 'gene_molecular_function', 'gene_cellular_component', 'species'],
         "go": ['go_type', 'go_species', 'go_genes'],
@@ -129,7 +134,7 @@ def search():
     }
 
     return jsonify(response)
-
+    
 
 @app.route('/api/search_autocomplete')
 def search_autocomplete():
@@ -152,17 +157,28 @@ def search_autocomplete():
     })
 
 
+
+
 # make static assets available
 @app.route('/assets/<path:path>')
 def send_static(path):
     return send_from_directory('build', path)
 
+@app.route('/api/gene/<id>')
+def gene(id):
+    limit = 10
+    offset = 0
+    query = id
+    category = 'gene'
+    sort_by = request.args.get('sort_by', '')
+    return searchQuery(query, limit, offset, category, sort_by) 
 
 # render user interfaces in client JS
 @app.route('/')
 @app.route('/about')
 @app.route('/help')
 @app.route('/search')
+@app.route('/gene')
 def react_render():
     return render_template('index.jinja2')
 

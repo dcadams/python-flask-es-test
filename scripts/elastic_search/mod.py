@@ -31,8 +31,11 @@ class MOD():
     @staticmethod
     def factory(organism):
         from worm import WormBase
+        from fly import FlyBase
         if organism in ("Caenorhabditis elegans", "C. elegans", "CAEEL"):
             return WormBase()
+        elif organism in ("Drosophila melanogaster"): 
+            return FlyBase()
         else:
             return None
 
