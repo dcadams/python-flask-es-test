@@ -1,14 +1,16 @@
 import time
 
+from fly import FlyBase
 from worm import WormBase
 
 from mod import MOD
 
+fly = FlyBase()
 worm = WormBase()
 
 mod = MOD()
 
-mods = [worm]
+mods = [worm, fly]
 
 for m in mods:
     start_time = time.time()
