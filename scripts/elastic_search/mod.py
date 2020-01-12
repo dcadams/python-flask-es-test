@@ -144,6 +144,7 @@ class MOD():
                             self.go_dataset[creating_term][key].append(value)
                         else:
                             self.go_dataset[creating_term][key] = [value]
+        self.deconstruct_go_dataset()
 
     def add_go_annotation_to_gene(self, gene_id, go_id):
         if go_id not in self.go_dataset or go_id in MOD.go_blacklist or gene_id not in self.genes:
@@ -289,3 +290,20 @@ class MOD():
         self.index_genes_into_es()
         self.index_go_into_es()
         self.index_diseases_into_es()
+        
+    def deconstruct_go_dataset(self):
+#         for key, val in self.go_dataset.items():
+#             if key == 'GO:0019370':
+        element = self.go_dataset['GO:0019370']
+        for key, val in element.items():
+            print '*****key: ', key
+            print '+++++val: ', val
+  
+
+#       print 'Element: ', i, 'key: ', key, 'val: ', val
+#       element = self.go_dataset['GO:0019370']
+#       print 'Element: ', element
+
+
+
+
