@@ -144,7 +144,7 @@ class MOD():
                             self.go_dataset[creating_term][key].append(value)
                         else:
                             self.go_dataset[creating_term][key] = [value]
-        self.deconstruct_go_dataset()
+        #self.deconstruct_go_dataset()
 
     def add_go_annotation_to_gene(self, gene_id, go_id):
         if go_id not in self.go_dataset or go_id in MOD.go_blacklist or gene_id not in self.genes:
@@ -203,36 +203,36 @@ class MOD():
                 "category": "disease"
             }
 
-    def load_from_file(self, filename):
-        if os.path.isfile(filename):
-            with open(filename, "rb") as f:
-                return pickle.load(f)
-        return None
-
-    def load_data_from_file(self):
-        print "Loading genes from file..."
-        self.genes = self.load_from_file(self.gene_bkp_filename)
-
-        print "Loading go from file..."
-        self.go = self.load_from_file(self.go_bkp_filename)
-
-        print "Loading diseases from file..."
-        self.diseases = self.load_from_file(self.diseases_bkp_filename)
-
-        if self.genes is None or self.go is None or self.diseases is None:
-            print ("Fail loading data from backup")
-
+#     def load_from_file(self, filename):
+#         if os.path.isfile(filename):
+#             with open(filename, "rb") as f:
+#                 return pickle.load(f)
+#         return None
+# 
+#     def load_data_from_file(self):
+#         print "Loading genes from file..."
+#         self.genes = self.load_from_file(self.gene_bkp_filename)
+# 
+#         print "Loading go from file..."
+#         self.go = self.load_from_file(self.go_bkp_filename)
+# 
+#         print "Loading diseases from file..."
+#         self.diseases = self.load_from_file(self.diseases_bkp_filename)
+# 
+#         if self.genes is None or self.go is None or self.diseases is None:
+#             print ("Fail loading data from backup")
+# 
     def save_dict_into_file(self, data, filename):
         with open(filename, "wb") as f:
             pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
-
+ 
     def save_into_file(self):
         print "Saving genes into file..."
         self.save_dict_into_file(self.genes, self.gene_bkp_filename)
-
+ 
         print "Saving go into file..."
         self.save_dict_into_file(self.go, self.go_bkp_filename)
-
+ 
         print "Saving diseases into file..."
         self.save_dict_into_file(self.diseases, self.diseases_bkp_filename)
 
