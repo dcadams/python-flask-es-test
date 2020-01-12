@@ -64,7 +64,7 @@ class MOD():
 
 
     def _load_omim_dataset(self):
-        if MOD.omim_dataset != {}:
+        if self.omim_dataset != {}:
             return
 
         print "loading OMIM dataset from file..."
@@ -103,7 +103,7 @@ class MOD():
 
                         synonyms.append(alt_name + alt_symbol)
 
-                MOD.omim_dataset["OMIM:" + row[1]] = {
+                self.omim_dataset["OMIM:" + row[1]] = {
                     "prefix": row[0],
                     "name": name.lower(),
                     "symbol": symbol,
@@ -111,7 +111,7 @@ class MOD():
                 }
 
     def _load_go_dataset(self):
-        if MOD.go_dataset != {}:
+        if self.go_dataset != {}:
             return
 
         print "Loading GO dataset from file..."
@@ -129,7 +129,7 @@ class MOD():
 
                     if key == "id":
                         creating_term = value
-                        MOD.go_dataset[creating_term] = {}
+                        self.go_dataset[creating_term] = {}
                     else:
                         if key == "synonym":
                             if value.split(" ")[-2] == "EXACT":
@@ -140,10 +140,10 @@ class MOD():
                             m = re.search('\"(.+)\"', value)
                             value = m.group(1)
 
-                        if key in MOD.go_dataset[creating_term]:
-                            MOD.go_dataset[creating_term][key].append(value)
+                        if key in self.go_dataset[creating_term]:
+                            self.go_dataset[creating_term][key].append(value)
                         else:
-                            MOD.go_dataset[creating_term][key] = [value]
+                            self.go_dataset[creating_term][key] = [value]
 
     def add_go_annotation_to_gene(self, gene_id, go_id):
         if go_id not in self.go_dataset or go_id in MOD.go_blacklist or gene_id not in self.genes:
