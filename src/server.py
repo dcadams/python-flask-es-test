@@ -130,6 +130,14 @@ def search():
 
     return jsonify(response)
 
+@app.route('/api/gene')
+def gene():
+    query = request.args.get('g', '')
+    #import pudb; pudb.set_trace()
+    print "In Gene func"
+    return jsonify({
+        "results": '12323'
+    })
 
 @app.route('/api/search_autocomplete')
 def search_autocomplete():
@@ -163,6 +171,7 @@ def send_static(path):
 @app.route('/about')
 @app.route('/help')
 @app.route('/search')
+@app.route('/gene')
 def react_render():
     return render_template('index.jinja2')
 
