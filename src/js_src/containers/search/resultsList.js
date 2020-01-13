@@ -47,7 +47,7 @@ class ResultsList extends Component {
 
   renderGeneEntry(d, i) {
     let topFields = ['name', 'synonyms'];
-    let bottomFields = ['species', 'gene_type'];
+    let bottomFields = ['species', 'gene_type', 'gene_chromosome_strand'];
     let logHighlight = d.highlight['homologs.symbol'] || d.highlight['homologs.panther_family'];
     return (
       <div className={style.resultContainer} key={`sr${i}`}>

@@ -111,7 +111,8 @@ function parseGeneResult(_d) {
     highlight: d.highlights,
     homologs: parseLogs(d.homologs),
     paralogs: parseLogs(d.paralogs),
-    genomic_coordinates: parseCoordinates(_d)
+    genomic_coordinates: parseCoordinates(_d),
+    gene_chromosome_strand: d.gene_chromosome_strand,
   };
 }
 

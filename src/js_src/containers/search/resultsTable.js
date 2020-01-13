@@ -14,7 +14,7 @@ class ResultsTable extends Component {
     let fields;
     switch(this.props.activeCategory) {
     case 'gene':
-      fields = ['display_name', 'name', 'synonyms', 'source', 'species', 'gene_type', 'genomic_coordinates'];
+      fields = ['display_name', 'name', 'synonyms', 'source', 'species', 'gene_type', 'genomic_coordinates', 'gene_chromosome_strand'];
       break;
     case 'go':
       fields = ['display_name', 'id', 'synonyms', 'go_branch'];
@@ -79,6 +79,8 @@ class ResultsTable extends Component {
           return <td key={_key}>{this.renderHighlight(d.highlight, d.homologs)}</td>;
         case 'species':
           return <td key={_key}><i dangerouslySetInnerHTML={{ __html: d.species }} /></td>;
+        case 'gene_chromosome_strand':
+          return <td key={_key}><i dangerouslySetInnerHTML={{ __html: d.gene_chromosome_strand }} /></td>;
         default:
           return <td dangerouslySetInnerHTML={{ __html: this.renderTruncatedContent(d[field]) }} key={_key} />;
         }
