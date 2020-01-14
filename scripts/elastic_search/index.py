@@ -1,12 +1,12 @@
 import time
 
-from fly import FlyBase
-from worm import WormBase
+from fly import Fly
+from worm import Worm
 
 from mod import MOD
 
-fly = FlyBase()
-worm = WormBase()
+fly = Fly()
+worm = Worm()
 
 mod = MOD()
 

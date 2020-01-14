@@ -1,10 +1,15 @@
+from base import Base
 from mod import MOD
+
 import xlrd
-import csv
 
 
-class WormBase(MOD):
+class Worm(Base):
     species = "Caenorhabditis elegans"
+    gene_data_xls_filename = "data/WormGenes.xlsx"
+    go_data_csv_filename = "data/WormGoGeneMapping.tsv"
+    disease_data_csv_filename = "data/WormDiseaseGeneMapping.tsv"
+    
 
     @staticmethod
     def gene_href(gene_id):
@@ -18,11 +23,9 @@ class WormBase(MOD):
     def load_genes(self):
         genes = MOD.genes
 
-        gene_data_xls_filename = "data/WormGenes.xlsx"
-
         print("Fetching gene data from WormGenes xlsx file...")
 
-        workbook = xlrd.open_workbook(gene_data_xls_filename)
+        workbook = xlrd.open_workbook(self.gene_data_xls_filename)
         sheet = workbook.sheet_by_index(0)
 
         for i in range(1, sheet.nrows):
@@ -58,36 +61,6 @@ class WormBase(MOD):
 
                 "name_key": row[1].value.lower(),
                 "id": row[0].value,
-                "href": WormBase.gene_href(row[0].value),
+                "href": Worm.gene_href(row[0].value),
                 "category": "gene"
             }
-
-    def load_go(self):
-        go_data_csv_filename = "data/WormGoGeneMapping.tsv"
-
-        print("Fetching go data from WormBase tsv file...")
-
-        with open(go_data_csv_filename, 'rb') as f:
-            reader = csv.reader(f, delimiter='\t')
-
-            for i in xrange(24):
-                next(reader, None)
-
-            for row in reader:
-                self.add_go_annotation_to_gene(gene_id=row[1], go_id=row[4])
-
-    def load_diseases(self):
-        disease_data_csv_filename = "data/WormDiseaseGeneMapping.tsv"
-
-        print("Fetching disease data from Worm tsv file...")
-
-        with open(disease_data_csv_filename, 'rb') as f:
-            reader = csv.reader(f, delimiter='\t')
-            next(reader, None)
-
-            for row in reader:
-                if row[2] and row[2] != "":
-                    omim_ids = map(lambda s: s.strip(), row[2].split(","))
-
-                    for omim_id in omim_ids:
-                        self.add_disease_annotation_to_gene(gene_id=None, omim_id="OMIM:"+omim_id)
